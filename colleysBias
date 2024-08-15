@@ -1,0 +1,16 @@
+%% colleys bias free ranking + massey's method
+load ("Scores.mat");
+load ("Differentials.mat");
+
+%% colley's method:
+games = abs(Scores);
+total = sum (games, 2);
+ColleyMatrix = 2.*eye(10) + diag(total)-games;
+RightSide = (1+0.5.*sum(Scores,2));
+RanksColley=ColleyMatrix\RightSide
+
+Teams={"Baylor", "Iowa State", "University of Kansas", "Kansas State", "University of Oklahoma", "Oklahoma State", "Texas Christian", "University of Texas, Austin", "Texas Tech", "West Virginia"};
+[RanksDescend,Order] = sort(RanksColley,"descend");
+for j=1:10
+fprintf("%8.3f %-15s\n", RanksColley(Order(j)), Teams{Order(j)})
+end;
