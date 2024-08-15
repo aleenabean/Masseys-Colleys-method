@@ -1,8 +1,8 @@
-%% colleys bias free ranking + massey's method
+%% colleys bias free ranking 
 load ("Scores.mat");
 load ("Differentials.mat");
 
-%% colley's method:
+%% calculator
 games = abs(Scores);
 total = sum (games, 2);
 ColleyMatrix = 2.*eye(10) + diag(total)-games;
