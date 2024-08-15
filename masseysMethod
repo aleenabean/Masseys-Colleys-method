@@ -1,0 +1,27 @@
+load ("Scores.mat");
+load("Differentials.mat");
+
+%% below code scans portions of Differentials matrix above main diagonal then creates matrix P (1 and -1's to determine win/loss of team i and j) and vector B (point differentials of team i and j)
+for j=1:9
+  for k=j+1:10
+    if Differentials(j,k)~=0
+      l=l+1;
+      P(l,j)=1;
+      P(l,k)=-1;
+      B(l)=Differentials(j,k);
+    end;
+  end;
+end;
+
+A = P'* P;
+D = P'*B';
+A(10,:)=[1 1 1 1 1 1 1 1 1 1];
+D(10) = 0;
+RanksMassey = A\D;
+Teams={"Baylor", "Iowa State", "University of Kansas", "Kansas State", "University of Oklahoma", "Oklahoma State", "Texas Christian", "University of Texas, Austin", "Texas Tech", "West Virginia"};
+[RanksDescend,Order] = sort(RanksColley,"descend");
+[RanksDescend,Order]=sort(RanksMassey,"descend");
+
+for j=1:10
+fprintf("%8.3f %-15s\n", RanksMassey(Order(j)), Teams{Order(j)})
+end;
