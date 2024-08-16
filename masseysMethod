@@ -1,3 +1,4 @@
+%% massey's method
 load ("Scores.mat");
 load("Differentials.mat");
 
@@ -17,6 +18,7 @@ A = P'* P;
 D = P'*B';
 A(10,:)=[1 1 1 1 1 1 1 1 1 1];
 D(10) = 0;
+
 RanksMassey = A\D;
 Teams={"Baylor", "Iowa State", "University of Kansas", "Kansas State", "University of Oklahoma", "Oklahoma State", "Texas Christian", "University of Texas, Austin", "Texas Tech", "West Virginia"};
 [RanksDescend,Order] = sort(RanksColley,"descend");
