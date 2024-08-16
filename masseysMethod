@@ -7,8 +7,10 @@ for j=1:9
   for k=j+1:10
     if Differentials(j,k)~=0
       l=l+1;
+%% Matrix P documents which teams played against one another
       P(l,j)=1;
       P(l,k)=-1;
+%% Vector B documents point differential between team j and k
       B(l)=Differentials(j,k);
     end;
   end;
@@ -16,14 +18,16 @@ end;
 
 A = P'* P;
 D = P'*B';
+
+%% below code adds constraint -> total differnetials should add up to 0, resulting in consistant ranking
 A(10,:)=[1 1 1 1 1 1 1 1 1 1];
 D(10) = 0;
-
 RanksMassey = A\D;
 Teams={"Baylor", "Iowa State", "University of Kansas", "Kansas State", "University of Oklahoma", "Oklahoma State", "Texas Christian", "University of Texas, Austin", "Texas Tech", "West Virginia"};
 [RanksDescend,Order] = sort(RanksColley,"descend");
 [RanksDescend,Order]=sort(RanksMassey,"descend");
 
+%% prints ranking and respective team in descending order
 for j=1:10
 fprintf("%8.3f %-15s\n", RanksMassey(Order(j)), Teams{Order(j)})
 end;
